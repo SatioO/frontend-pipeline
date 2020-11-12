@@ -6,6 +6,3 @@ services:
 before_install:
   - docker image build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
   - docker container run -d -p 8888:8888 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
-
-script:
-  - curl localhost:8888
