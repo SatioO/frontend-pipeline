@@ -1,12 +1,13 @@
-sudo: required
 language: go
 
 services:
   - docker
 
 before_install:
-  - docker image build -t beanstalk:${TRAVIS_COMMIT} ./server
-  - docker container run -d -p 127.0.0.1:8888:8888 beanstalk:${TRAVIS_COMMIT}
+  - docker image build -t beanstalk:multi-client ./client
+  - docker image build -t beanstalk:multi-server ./server
+  - docker image build -t beanstalk:multi-nginx ./nginx
 
 script:
-  - curl 127.0.0.1:8888
+  - docker container run -p 3000:80 beanstalk:multi-nginx ./nginx
+  - curl 127.0.0.1:3000
