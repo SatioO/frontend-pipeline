@@ -3,9 +3,23 @@ language: go
 services:
   - docker
 
-script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t multi-nginx ./nginx
-    - docker images
-    - docker tag multi-nginx $DOCKER_USERNAME/multi-nginx
-    - docker push $DOCKER_USERNAME/multi-nginx
+dist: trusty
+
+jobs:
+  include:
+    - stage: build
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker image build -t multi-nginx ./nginx
+      - docker image build -t multi-client ./client
+      - docker image build -t multi-server ./server
+      - docker images
+      - docker tag multi-nginx $DOCKER_USERNAME/multi-nginx
+      - docker push $DOCKER_USERNAME/multi-nginx
+      - docker tag multi-client $DOCKER_USERNAME/multi-client
+      - docker push $DOCKER_USERNAME/multi-client
+      - docker tag multi-server $DOCKER_USERNAME/multi-server
+      - docker push $DOCKER_USERNAME/multi-server
+
+    - stage: test
+      script: docker container run -d -p 8888:80 $DOCKER_USERNAME/multi-nginx
