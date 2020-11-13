@@ -5,4 +5,6 @@ services:
 
 before_install:
   - docker image build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
-  - docker container run -d -p 8888:8888 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+
+script:
+  - docker container run -p 8888:8888 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
