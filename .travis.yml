@@ -4,14 +4,14 @@ services:
   - docker
 
 before_install:
-  - docker image build -t satioO:multi-client ./client
-  - docker image build -t satioO:multi-server ./server
-  - docker image build -t satioO:multi-nginx ./nginx
+  - docker image build -t vaibhavsatam:multi-client ./client
+  - docker image build -t vaibhavsatam:multi-server ./server
+  - docker image build -t vaibhavsatam:multi-nginx ./nginx
 
 after_success:
   # Login to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # Push images to docker hub
-  - docker push satioO:multi-client
-  - docker push satioO:multi-server
-  - docker push satioO:multi-nginx
+  - docker push vaibhavsatam:multi-client
+  - docker push vaibhavsatam:multi-server
+  - docker push vaibhavsatam:multi-nginx
