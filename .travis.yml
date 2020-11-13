@@ -4,14 +4,14 @@ services:
   - docker
 
 before_install:
-  - docker image build -t satamvaibhav:multi-client ./client
-  - docker image build -t satamvaibhav:multi-server ./server
-  - docker image build -t satamvaibhav:multi-nginx ./nginx
+  - docker image build -t togoteam:multi-client ./client
+  - docker image build -t togoteam:multi-server ./server
+  - docker image build -t togoteam:multi-nginx ./nginx
 
 after_success:
   # Login to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # Push images to docker hub
-  - docker push satamvaibhav:multi-client
-  - docker push satamvaibhav:multi-server
-  - docker push satamvaibhav:multi-nginx
+  - docker push togoteam:multi-client
+  - docker push togoteam:multi-server
+  - docker push togoteam:multi-nginx
