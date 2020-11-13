@@ -1,10 +1,11 @@
+sudo: required
 language: go
 
 services:
   - docker
 
 before_install:
-  - docker image build --no-cache -t beanstalk:${TRAVIS_COMMIT} .
+  - docker image build -t beanstalk:${TRAVIS_COMMIT} ./server
   - docker container run -d -p 127.0.0.1:8888:8888 beanstalk:${TRAVIS_COMMIT}
 
 script:

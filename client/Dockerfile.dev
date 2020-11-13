@@ -1,0 +1,15 @@
+# pull from official base image
+FROM node:alpine AS build
+
+# set base working directory
+WORKDIR /app
+
+# install app dependencies
+COPY package.json ./
+RUN npm install
+
+# add app
+COPY . ./
+
+# build the app
+CMD ["npm", "start"]
