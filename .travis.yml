@@ -3,15 +3,9 @@ language: go
 services:
   - docker
 
-before_install:
-  - docker image build -t togoteam:multi-client ./client
-  - docker image build -t togoteam:multi-server ./server
-  - docker image build -t togoteam:multi-nginx ./nginx
-
-after_success:
-  # Login to docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # Push images to docker hub
-  - docker push docker.io/togoteam:multi-client
-  - docker push docker.io/togoteam:multi-server
-  - docker push docker.io/togoteam:multi-nginx
+script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t multi-nginx ./nginx
+    - docker images
+    - docker tag multi-nginx $DOCKER_USERNAME/multi-nginx
+    - docker push $DOCKER_USERNAME/multi-nginx
