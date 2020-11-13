@@ -21,3 +21,16 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./server
+    environment:
+      - FOO=Root
+      - BAR=Groot
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=users # database name you want to make
+      - MONGO_INITDB_ROOT_USERNAME=root # set your container root username
+      - MONGO_INITDB_ROOT_PASSWORD=root # set your contatner root password
+    volumes:
+      - mongodb_data_container:/data/db
+volumes:
+  mongodb_data_container:

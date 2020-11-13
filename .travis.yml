@@ -7,10 +7,9 @@ before_install:
   - docker image build -t beanstalk:multi-client ./client
   - docker image build -t beanstalk:multi-server ./server
   - docker image build -t beanstalk:multi-nginx ./nginx
+  - docker container run -d beanstalk:multi-client ./client
+  - docker container run -d beanstalk:multi-server ./server
+  - docker container run -d -p 127.0.0.1:3000:80 beanstalk:multi-nginx ./nginx
 
 script:
-  - docker container run -p 127.0.0.1:3000:80 beanstalk:multi-nginx ./nginx
   - curl 127.0.0.1:3000
-
-deploy:
-  provider: elasticbeanstalk
