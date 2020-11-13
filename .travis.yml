@@ -5,6 +5,7 @@ services:
 
 before_install:
   - docker image build --no-cache -t beanstalk:${TRAVIS_COMMIT} .
+  - docker container run -p 8888:8888 beanstalk:${TRAVIS_COMMIT}
 
 script:
-  - docker container run -p 8888:8888 beanstalk:${TRAVIS_COMMIT}
+  - curl 127.0.0.1:8888
