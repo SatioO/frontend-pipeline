@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          From: Vaibhav Satam
+          Vaibhav Satam
         </a>
       </header>
     </div>
