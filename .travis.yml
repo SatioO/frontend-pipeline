@@ -32,6 +32,8 @@ jobs:
         bucket: "elasticbeanstalk-ap-south-1-327637452640"
         bucket_path: "docker-deploy"
         edge: true
+        on:
+          branch: main
 
         
 
