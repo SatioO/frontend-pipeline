@@ -16,7 +16,7 @@
             "memory": 128
         },
         {
-            "name": "database",
+            "name": "mongo",
             "image": "mongo",
             "hostname": "mongo",
             "essential": false,
@@ -34,7 +34,7 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["client", "server"]
+            "links": ["client", "server", "mongo"]
         }
     ]
 }
