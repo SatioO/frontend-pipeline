@@ -1,32 +1,36 @@
 {
     "AWSEBDockerrunVersion": 2,
-    "containerDefinations": [
+    "containerDefinitions": [
         {
             "name": "client",
             "image": "vaibhavsatam/multi-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "server",
             "image": "vaibhavsatam/multi-server",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "database",
             "image": "mongo",
             "hostname": "mongo",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "nginx",
             "image": "vaibhavsatam/multi-nginx",
             "hostname": "nginx",
             "essential": true,
+            "memory": 128,
             "portMappings": [
                 {
-                    "hostPort": 8888,
+                    "hostPort": 80,
                     "containerPort": 80
                 }
             ],
