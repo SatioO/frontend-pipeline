@@ -17,3 +17,19 @@ jobs:
       - docker push $DOCKER_USERNAME/multi-nginx
       - docker push $DOCKER_USERNAME/multi-client
       - docker push $DOCKER_USERNAME/multi-server
+    - stage: deploy
+      deploy:
+        provider: elasticbeanstalk
+        region: ap-south-1
+        app: docker-deploy
+        env: DockerDeploy-env
+        bucket_name: elasticbeanstalk-ap-south-1-327637452640
+        bucket_path: docker-deploy
+        on:
+          branch: master
+        access_key_id: $AWS_ACCESS_KEY
+        secret_access_key: 
+          secure: $AWS_SECRET_KEY
+
+        
+
