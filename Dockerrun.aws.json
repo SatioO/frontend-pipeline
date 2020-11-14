@@ -20,7 +20,13 @@
             "image": "mongo",
             "hostname": "mongo",
             "essential": false,
-            "memory": 128
+            "memory": 128,
+            "mountPoints": [
+                {
+                    "sourceVolume": "db",
+                    "containerPath": "/var/app/data/db"
+                }
+            ]
         },
         {
             "name": "nginx",
@@ -34,7 +40,19 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["client", "server", "mongo"]
+            "links": [
+                "client",
+                "server",
+                "mongo"
+            ]
         }
-    ]
+    ],
+    "volumes": [
+        {
+            "name": "db",
+            "host": {
+                "sourcePath": "/var/app/data/db"
+            }
+        }
+    ],
 }
