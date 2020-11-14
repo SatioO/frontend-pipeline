@@ -19,8 +19,8 @@ jobs:
       - docker push $DOCKER_USERNAME/multi-server
     - stage: before deploy
       before_deploy: 
-        - echo $AWS_ACCESS_KEY
-        - echo $AWS_SECRET_KEY
+      - echo $AWS_ACCESS_KEY
+      - echo $AWS_SECRET_KEY
     - stage: deploy
       deploy:
         provider: elasticbeanstalk
