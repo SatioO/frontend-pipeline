@@ -24,17 +24,14 @@ jobs:
     - stage: deploy
       deploy:
         provider: elasticbeanstalk
-        access_key_id:
-          secure: $AWS_ACCESS_KEY
-        secret_access_key:
-          secure: $AWS_SECRET_KEY
+        access_key_id: $AWS_ACCESS_KEY_ID
+        secret_access_key: $AWS_SECRET_KEY_ID
         region: "ap-south-1"
         app: "docker-deploy"
         env: "DockerDeploy-env"
-        bucket_name: "elasticbeanstalk-ap-south-1-327637452640"
+        bucket: "elasticbeanstalk-ap-south-1-327637452640"
         bucket_path: "docker-deploy"
-        on:
-          branch: main
+        edge: true
 
         
 
