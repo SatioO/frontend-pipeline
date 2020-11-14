@@ -13,18 +13,19 @@
             "image": "vaibhavsatam/multi-server",
             "hostname": "api",
             "essential": false,
-            "memory": 128
+            "memory": 128,
+            "links": ["database"]
         },
         {
-            "name": "mongo",
+            "name": "database",
             "image": "mongo",
             "hostname": "mongo",
-            "essential": false,
+            "essential": true,
             "memory": 128,
-            "mountPoints": [
+            "portMappings": [
                 {
-                    "sourceVolume": "db",
-                    "containerPath": "/var/app/data/db"
+                    "hostPort": 27017,
+                    "containerPort": 27017
                 }
             ]
         },
@@ -42,17 +43,8 @@
             ],
             "links": [
                 "client",
-                "server",
-                "mongo"
+                "server"
             ]
         }
-    ],
-    "volumes": [
-        {
-            "name": "db",
-            "host": {
-                "sourcePath": "/var/app/data/db"
-            }
-        }
-    ],
+    ]
 }
