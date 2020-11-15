@@ -10,7 +10,7 @@ function FriendsList(props) {
         <div className="items">
             {props.data.map((item, index) =>
                 <ListItem
-                    key={index}
+                    key={`${item.title}-${index}`}
                     item={item}
                     index={index}
                     onDelete={props.onDelete}

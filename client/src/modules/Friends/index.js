@@ -1,11 +1,12 @@
 import "./index.css"
 import React from "react"
-import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "./constants"
+import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, NEXT_PAGE, PREVIOUS_PAGE, SEARCH_FRIEND } from "./constants"
 import { INITIAL_STATE, reducer } from "./reducer"
 import Header from "./components/Header"
 import AddFriend from "./components/AddFriend"
 import ListView from "./components/ListView";
 import SearchBox from "./components/SearchBox"
+import Footer from "./components/Footer"
 
 function Friends() {
     const [isSearchActive, setSearchActive] = React.useState(false)
@@ -29,11 +30,19 @@ function Friends() {
         dispatch({ type: SEARCH_FRIEND, query })
     }
 
+    function onPreviousPage() {
+        dispatch({ type: PREVIOUS_PAGE })
+    }
+
+    function onNextPage() {
+        dispatch({ type: NEXT_PAGE })
+    }
+
     return (
         <div>
-            <Header 
+            <Header
                 onSearch={() => setSearchActive(true)}
-                onAdd={() => setSearchActive(false)}/>
+                onAdd={() => setSearchActive(false)} />
             <div className="search-bar">
                 {!isSearchActive
                     ? <AddFriend
@@ -47,6 +56,11 @@ function Friends() {
                 data={state.data.slice(state.page.offset, state.page.limit)}
                 onDelete={onDeleteFriend}
                 onFavorite={onFavoriteFriend}
+            />
+            <Footer
+                page={state.page}
+                onNextPage={onNextPage} 
+                onPreviousPage={onPreviousPage} 
             />
         </div>
     )
