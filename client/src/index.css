@@ -17,3 +17,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: var(--surface-color);
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  flex-basis: 75%;
+  height: 75%;
+  background-color: var(--surface-color);
+  overflow: hidden;
+}

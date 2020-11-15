@@ -7,9 +7,9 @@ function FriendsList(props) {
     }
 
     return (
-        <div className="list">
+        <div className="items">
             {props.data.map((item, index) => (
-                <div className="list-item" key={item.title}>
+                <div className="item" key={item.title}>
                     <div>
                         <div>{item.title}</div>
                         <p>is your friend</p>

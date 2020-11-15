@@ -1,5 +1,5 @@
 import React from "react"
-import useDebounce from "../../hooks/useDebounce";
+import useDebounce from "../../../hooks/useDebounce";
 
 function SearchBox(props) {
     const [query, setQuery] = React.useState('');

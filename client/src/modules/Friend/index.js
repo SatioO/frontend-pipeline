@@ -1,15 +1,11 @@
-import "./index.css"
-import React, { useReducer } from "react"
-import CardHeader from "../CardHeader"
-import FriendsList from "../FriendsList"
-import AddFriend from "../AddFriend"
-import SearchBox from "../SearchBox"
-import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "../../constants"
-import { friendsReducer, FRIENDS_STATE } from "../../reducers/friends"
+import React from "react"
+import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "./constants"
+import { INITIAL_STATE, reducer } from "./reducer"
+import Header from "./Header"
 
-function Card() {
-    const [state, dispatch] = useReducer(friendsReducer, FRIENDS_STATE)
+function Friends() {
     const [isSearchActive, setSearchActive] = React.useState(false)
+    const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
 
     function onAddFriend(value) {
         dispatch({ type: ADD_FRIEND, value })
@@ -29,13 +25,11 @@ function Card() {
         dispatch({ type: SEARCH_FRIEND, query })
     }
 
-    function toggleSearch() {
-        setSearchActive(!isSearchActive)
-    }
-
     return (
-        <div className="card">
-            <CardHeader onSearchClick={toggleSearch} />
+        <div>
+            <Header 
+                onSearch={() => setSearchActive(true)}
+                onAdd={() => setSearchActive(false)}/>
             {!isSearchActive
                 ? <AddFriend
                     placeholder="Enter your Friend's Name"
@@ -52,4 +46,4 @@ function Card() {
     )
 }
 
-export default Card
+export default Friends

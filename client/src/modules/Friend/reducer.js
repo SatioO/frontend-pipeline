@@ -1,4 +1,5 @@
-import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "../constants"
+import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "./constants"
+
 const data = [
     {
         title: "Vaibhav Satam",
@@ -18,7 +19,7 @@ const data = [
     }
 ]
 
-export const FRIENDS_STATE = {
+export const INITIAL_STATE = {
     page: {
         offset: 0,
         limit: 4
@@ -27,7 +28,7 @@ export const FRIENDS_STATE = {
     initialItems: data
 }
 
-export function friendsReducer(state, action) {
+export function reducer(state, action) {
     switch (action.type) {
         case ADD_FRIEND:
             return { ...state, data: [{ title: action.value, active: false }, ...state.data] }

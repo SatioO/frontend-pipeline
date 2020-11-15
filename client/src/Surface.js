@@ -1,10 +1,11 @@
-import './index.css';
-import Card from "../Card"
+import Friends from './modules/friend';
 
 function Surface() {
   return (
     <div className="container">
-      <Card />
+      <div className="card">
+        <Friends />
+      </div>
     </div>
   );
 }
