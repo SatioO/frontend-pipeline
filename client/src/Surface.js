@@ -1,3 +1,4 @@
+import Credits from './Credits';
 import Friends from './modules/Friends';
 
 function Surface() {
@@ -6,6 +7,7 @@ function Surface() {
       <div className="card">
         <Friends />
       </div>
+      <Credits />
     </div>
   );
 }
