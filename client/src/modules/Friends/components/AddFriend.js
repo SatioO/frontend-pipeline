@@ -4,8 +4,8 @@ function AddFriend(props) {
     const inputRef = React.useRef(props.defaultValue)
 
     function onSubmit(event) {
-        if(event.key === "Enter" && inputRef.current.value.length > 0) {
-            props.onSubmit(inputRef.current.value)
+        if(event.key === "Enter" && inputRef.current.value.trim().length > 0) {
+            props.onSubmit(inputRef.current.value.trim())
             inputRef.current.value = ''
         } 
     }

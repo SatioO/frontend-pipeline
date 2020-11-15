@@ -1,5 +1,6 @@
 import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, NEXT_PAGE, PREVIOUS_PAGE, SEARCH_FRIEND } from "./constants"
 
+const step = 4
 const data = [
     {
         title: "Vaibhav Satam",
@@ -30,7 +31,7 @@ const data = [
 export const INITIAL_STATE = {
     page: {
         offset: 0,
-        limit: 4,
+        limit: step,
         total: data.length
     },
     data,
@@ -39,47 +40,59 @@ export const INITIAL_STATE = {
 
 export function reducer(state, action) {
     switch (action.type) {
-        case ADD_FRIEND:
-            return { 
+        case ADD_FRIEND: {
+            const data = [{ title: action.value, active: false }, ...state.data].sort((a, b) => b.active - a.active)
+            return {
                 ...state,
                 page: {
                     ...state.page,
                     total: state.page.total + 1
-                }, 
-                data: [{ title: action.value, active: false }, ...state.data].sort((a, b) => b.active - a.active)
+                },
+                initialItems: data,
+                data,
             }
+        }
 
-        case DELETE_FRIEND:
+        case DELETE_FRIEND: {
+            const data = [
+                ...state.data.slice(0, state.page.offset + action.index),
+                ...state.data.slice(state.page.offset + action.index + 1)
+            ]
+
             return {
                 ...state,
                 page: {
                     ...state.page,
-                    offset: state.page.total - 1 === 4 ? 0 : state.page.offset,
-                    limit: state.page.total - 1 === 4 ? 4 : state.page.limit,
+                    offset: state.page.total - 1 === step ? 0 : state.page.offset,
+                    limit: state.page.total - 1 === step ? step : state.page.limit,
                     total: state.page.total - 1
-                }, 
-                data: [
-                    ...state.data.slice(0, state.page.offset + action.index),
-                    ...state.data.slice(state.page.offset + action.index + 1)
-                ]
+                },
+                initialItems: data,
+                data,
             }
+        }
 
-        case FAVORITE_FRIEND:
+        case FAVORITE_FRIEND: {
+            const data = state.data.map((item, i) =>
+                i === state.page.offset + action.index
+                    ? ({ ...item, active: !item.active })
+                    : item
+            ).sort((a, b) => b.active - a.active)
+            
             return {
-                ...state, data: state.data.map((item, i) =>
-                    i === state.page.offset + action.index
-                        ? ({ ...item, active: !item.active })
-                        : item
-                ).sort((a, b) => b.active - a.active)
+                ...state,
+                initialItems: data,
+                data
             }
+        }
 
         case SEARCH_FRIEND:
             return {
-                ...state, 
+                ...state,
                 page: {
                     ...state.page,
                     offset: 0,
-                    limit: 4,
+                    limit: step,
                     total: data.length
                 },
                 data: state.initialItems.filter(
@@ -91,21 +104,21 @@ export function reducer(state, action) {
 
         case PREVIOUS_PAGE:
             return {
-                ...state, 
+                ...state,
                 page: {
                     ...state.page,
-                    offset: state.page.offset - 4,
-                    limit: state.page.limit - 4
+                    offset: state.page.offset - step,
+                    limit: state.page.limit - step
                 }
             }
 
         case NEXT_PAGE:
             return {
-                ...state, 
+                ...state,
                 page: {
                     ...state.page,
-                    offset: state.page.offset + 4,
-                    limit: state.page.limit + 4
+                    offset: state.page.offset + step,
+                    limit: state.page.limit + step
                 }
             }
 

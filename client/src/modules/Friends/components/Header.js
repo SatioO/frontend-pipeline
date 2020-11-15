@@ -16,7 +16,7 @@ function Header(props) {
                 <input 
                 type="search" 
                 placeholder="Search" 
-                onChange={e => setQuery(e.target.value)}/>
+                onChange={e => setQuery(e.target.value.trim())}/>
             </div>
         </div>
     )
