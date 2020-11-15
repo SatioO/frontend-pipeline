@@ -1,22 +1,22 @@
 import React from "react"
+import useDebounce from "../../../hooks/useDebounce";
 
 function Header(props) {
+    const [query, setQuery] = React.useState('');
+    const debouncedQuery = useDebounce(query, 500);
+
+    React.useEffect(() => {
+        props.onChange(debouncedQuery)
+    }, [debouncedQuery])
+
     return (
         <div className="header">
             <p className="header-title">Friends List</p>
             <div>
-                <img 
-                    src={process.env.PUBLIC_URL + '/icons/playlist_add-24px.svg'} 
-                    alt="add"
-                    onClick={props.onAdd}
-                    className="icon"
-                />
-                <img 
-                    src={process.env.PUBLIC_URL + '/icons/search-24px.svg'} 
-                    alt="search" 
-                    onClick={props.onSearch}
-                    className="icon"
-                />
+                <input 
+                type="search" 
+                placeholder="Search" 
+                onChange={e => setQuery(e.target.value)}/>
             </div>
         </div>
     )

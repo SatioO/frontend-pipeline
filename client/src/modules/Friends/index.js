@@ -5,11 +5,9 @@ import { INITIAL_STATE, reducer } from "./reducer"
 import Header from "./components/Header"
 import AddFriend from "./components/AddFriend"
 import ListView from "./components/ListView";
-import SearchBox from "./components/SearchBox"
 import Footer from "./components/Footer"
 
 function Friends() {
-    const [isSearchActive, setSearchActive] = React.useState(false)
     const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
 
     function onAddFriend(value) {
@@ -40,17 +38,12 @@ function Friends() {
 
     return (
         <div>
-            <Header
-                onSearch={() => setSearchActive(true)}
-                onAdd={() => setSearchActive(false)} />
+            <Header onChange={onSearchFriend} />
             <div className="search-bar">
-                {!isSearchActive
-                    ? <AddFriend
-                        placeholder="Enter your Friend's Name"
-                        onSubmit={onAddFriend}
-                    />
-                    : <SearchBox placeholder="Search a Friend" onChange={onSearchFriend} />
-                }
+                <AddFriend
+                    placeholder="Enter your Friend's Name"
+                    onSubmit={onAddFriend}
+                />
             </div>
             <ListView
                 data={state.data.slice(state.page.offset, state.page.limit)}
