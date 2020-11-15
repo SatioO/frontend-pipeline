@@ -1,0 +1,22 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    transition: all 0.4s ease-out;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+}
