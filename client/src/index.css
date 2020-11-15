@@ -1,9 +1,8 @@
 :root { 
-  --primary-color: #6200EE;
-  --secondary-color: #03DAC6;
+  --primary-color:#6200EE;
+  --secondary-color: #B07707;
   --surface-color: #FFFFFF;
   --error-color: #B00020;
-  --default-padding: 14px;
 }
 
 * {
@@ -14,6 +13,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,14 +21,14 @@ body {
 .container {
   display: flex;
   height: 100vh;
-  background-color: var(--surface-color);
+  background-color: var(--primary-color);
   justify-content: center;
   align-items: center;
 }
 
 .card {
   flex-basis: 75%;
-  height: 75%;
   background-color: var(--surface-color);
-  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

@@ -34,8 +34,12 @@ export function reducer(state, action) {
             return { ...state, data: [{ title: action.value, active: false }, ...state.data] }
 
         case DELETE_FRIEND:
-            const index = action.index
-            return { ...state, data: [...state.data.slice(0, index), ...state.data.slice(index + 1)] }
+            return {
+                ...state, data: [
+                    ...state.data.slice(0, action.index),
+                    ...state.data.slice(action.index + 1)
+                ]
+            }
 
         case FAVORITE_FRIEND:
             return {
@@ -45,14 +49,16 @@ export function reducer(state, action) {
                         : item
                 ).sort((a, b) => b.active - a.active)
             }
-        
+
         case SEARCH_FRIEND:
-            return { ...state, data: state.initialItems.filter(
-                item =>
-                  item.title
-                    .toLowerCase()
-                    .includes(action.query.toLowerCase()))}
-        
+            return {
+                ...state, data: state.initialItems.filter(
+                    item =>
+                        item.title
+                            .toLowerCase()
+                            .includes(action.query.toLowerCase()))
+            }
+
         default:
             return state
     }

@@ -1,4 +1,4 @@
-import Friends from './modules/friend';
+import Friends from './modules/Friends';
 
 function Surface() {
   return (

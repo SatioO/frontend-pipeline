@@ -1,11 +1,15 @@
+import "./index.css"
 import React from "react"
 import { ADD_FRIEND, DELETE_FRIEND, FAVORITE_FRIEND, SEARCH_FRIEND } from "./constants"
 import { INITIAL_STATE, reducer } from "./reducer"
-import Header from "./Header"
+import Header from "./components/Header"
+import AddFriend from "./components/AddFriend"
+import ListView from "./components/ListView";
+import SearchBox from "./components/SearchBox"
 
 function Friends() {
     const [isSearchActive, setSearchActive] = React.useState(false)
-    const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+    const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
 
     function onAddFriend(value) {
         dispatch({ type: ADD_FRIEND, value })
@@ -30,14 +34,16 @@ function Friends() {
             <Header 
                 onSearch={() => setSearchActive(true)}
                 onAdd={() => setSearchActive(false)}/>
-            {!isSearchActive
-                ? <AddFriend
-                    placeholder="Enter your Friend's Name"
-                    onSubmit={onAddFriend}
-                />
-                : <SearchBox placeholder="Search a Friend" onChange={onSearchFriend} />
-            }
-            <FriendsList
+            <div className="search-bar">
+                {!isSearchActive
+                    ? <AddFriend
+                        placeholder="Enter your Friend's Name"
+                        onSubmit={onAddFriend}
+                    />
+                    : <SearchBox placeholder="Search a Friend" onChange={onSearchFriend} />
+                }
+            </div>
+            <ListView
                 data={state.data.slice(state.page.offset, state.page.limit)}
                 onDelete={onDeleteFriend}
                 onFavorite={onFavoriteFriend}

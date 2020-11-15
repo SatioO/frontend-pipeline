@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Surface from './components/Surface';
+import Surface from './Surface';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
