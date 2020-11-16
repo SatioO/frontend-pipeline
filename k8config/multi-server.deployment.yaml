@@ -15,8 +15,8 @@ spec:
         image: vaibhavsatam/multi-server
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "64Mi"
+            cpu: "250m"
         ports:
         - containerPort: 5000
   selector:

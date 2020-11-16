@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: multi-server-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: multi-server-pod
     tier: worker
   ports:
   - port: 5000
     targetPort: 5000
-    nodePort: 30005
