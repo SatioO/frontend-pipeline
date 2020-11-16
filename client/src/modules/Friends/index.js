@@ -16,11 +16,16 @@ function Friends() {
 
     function onDeleteFriend(index) {
         if (window.confirm("Are you sure you want to delete?")) {
-            dispatch({ type: DELETE_FRIEND, index })
+            const listEl = document.querySelectorAll('.item.show')
+            listEl[index].classList.remove('show')
+            setTimeout(() => {
+                dispatch({ type: DELETE_FRIEND, index })
+            }, 500)
         }
     }
 
     function onFavoriteFriend(index) {
+        const listEl = document.querySelectorAll('.item.show')
         dispatch({ type: FAVORITE_FRIEND, index })
     }
 
@@ -52,8 +57,8 @@ function Friends() {
             />
             <Footer
                 page={state.page}
-                onNextPage={onNextPage} 
-                onPreviousPage={onPreviousPage} 
+                onNextPage={onNextPage}
+                onPreviousPage={onPreviousPage}
             />
         </div>
     )

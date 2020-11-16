@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-server-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: multi-server-pod
+        tier: worker
+    spec:
+      containers:
+      - name: server
+        image: vaibhavsatam/multi-server
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+  selector:
+    matchLabels:
+      app: multi-server-pod
+      tier: worker

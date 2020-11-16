@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-client-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: multi-client-pod
+        tier: frontend
+    spec:
+      containers:
+      - name: client
+        image: vaibhavsatam/multi-client
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+  selector:
+    matchLabels:
+      app: multi-client-pod
+      tier: frontend

@@ -2,7 +2,7 @@ import React from "react";
 
 function ListItem({ item, index, onFavorite, onDelete }) {
     return (
-        <div className="item">
+        <div className="item show">
             <div>
                 <div className="list-title">{item.title}</div>
                 <p className="list-subtitle">is your friend</p>
@@ -23,4 +23,4 @@ function ListItem({ item, index, onFavorite, onDelete }) {
     )
 }
 
-export default ListItem
+export default React.memo(ListItem)

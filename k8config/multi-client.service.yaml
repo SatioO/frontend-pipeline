@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: multi-client-service
+spec:
+  selector:
+    app: multi-client-pod
+    tier: frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
