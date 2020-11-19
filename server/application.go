@@ -13,6 +13,33 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// MongoConfig ...
+type MongoConfig struct {
+	mongoHost string
+	mongoPort string
+	mongoDb   string
+	username  string
+	password  string
+	msgCol    string
+}
+
+var mongoConfig = MongoConfig{
+	mongoHost: getEnv("MONGO_HOST", "mongo"),
+	mongoPort: getEnv("MONGO_PORT", "27017"),
+	mongoDb:   getEnv("MONGO_DB", "users"),
+	username:  getEnv("MONGO_USER", "root"),
+	password:  getEnv("MONGO_PASS", "root"),
+	msgCol:    getEnv("MONGO_MSG_COLLECTION", "msgs"),
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+
+	return fallback
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("FOO:", os.Getenv("FOO"))
 	fmt.Println("BAR:", os.Getenv("BAR"))
@@ -36,7 +63,11 @@ func ConnectDB(dbName string) *mongo.Database {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	clientOptions := options.Client().ApplyURI("mongodb://mongo:27017")
+	fmt.Println("MONGO_HOST:", os.Getenv("MONGO_HOST"))
+	fmt.Println("MONGO_PORT:", os.Getenv("MONGO_PORT"))
+	fmt.Println("config", mongoConfig)
+
+	clientOptions := options.Client().ApplyURI("mongodb://" + getEnv("MONGO_HOST", "mongo") + ":" + getEnv("MONGO_PORT", "mongo"))
 	client, err := mongo.NewClient(clientOptions)
 
 	err = client.Connect(ctx)

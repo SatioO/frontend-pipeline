@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   nginx:
     depends_on:
@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - '8888:80'
+      - "8888:80"
   client:
     build:
       dockerfile: Dockerfile
@@ -17,13 +17,6 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
-  api:
-    build:
-      dockerfile: Dockerfile
-      context: ./server
-    environment:
-      - FOO=Root
-      - BAR=Groot
   mongo:
     image: mongo
     environment:
@@ -31,6 +24,14 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root # set your container root username
       - MONGO_INITDB_ROOT_PASSWORD=root # set your contatner root password
     volumes:
-      - mongodb_data_container:/data/db
-volumes:
-  mongodb_data_container:
+      - ./data/db:/data/db
+  api:
+    depends_on:
+      - mongo
+    restart: on-failure
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    environment:
+      - FOO=Root
+      - BAR=Groot

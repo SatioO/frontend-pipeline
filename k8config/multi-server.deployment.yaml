@@ -8,18 +8,26 @@ spec:
     metadata:
       labels:
         app: multi-server-pod
-        tier: worker
+        tier: server
     spec:
       containers:
       - name: server
         image: vaibhavsatam/multi-server
         resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
           limits:
             memory: "64Mi"
-            cpu: "250m"
+            cpu: "100m"
         ports:
         - containerPort: 5000
+        env:
+          - name: MONGO_PORT
+            value: "27017"
+          - name: MONGO_HOST
+            value: mongo-cluster-ip-service
   selector:
     matchLabels:
       app: multi-server-pod
-      tier: worker
+      tier: server

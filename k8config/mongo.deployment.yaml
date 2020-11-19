@@ -11,20 +11,30 @@ spec:
       labels:
         app: mongo-pod
     spec:
-      volumes:
-        - name: mongo-storage
-          persistentVolumeClaim:
-              claimName: mongo-persistent-volume-claim
+      # volumes:
+      #   - name: mongo-storage
+      #     persistentVolumeClaim:
+      #         claimName: mongo-persistent-volume-claim
       containers:
       - name: mongo
         image: mongo
         resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
           limits:
-            memory: "64Mi"
+            memory: "128Mi"
             cpu: "250m"
         ports:
         - containerPort: 27017
-        volumeMounts:
-          - name: mongo-storage
-            mountPath: /var/data/db
-            subPath: mongo
+        # volumeMounts:
+        #   - name: mongo-storage
+        #     mountPath: /data/db
+        #     subPath: mongo
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: root
+          - name: MONGO_INITDB_DATABASE
+            value: users
