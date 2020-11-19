@@ -8,28 +8,27 @@ import ListView from "./components/ListView";
 import Footer from "./components/Footer"
 
 function Friends() {
+    const [query, setQuery] = React.useState('')
     const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
+
+    const items = React.useMemo(() => state.data.filter(item => item.title
+        .toLowerCase()
+        .includes(query.toLowerCase())), [query, state.data])
 
     function onAddFriend(value) {
         dispatch({ type: ADD_FRIEND, value })
     }
 
-    function onDeleteFriend(index) {
-        if (window.confirm("Are you sure you want to delete?")) {
-            const listEl = document.querySelectorAll('.item.show')
-            listEl[index].classList.remove('show')
-            setTimeout(() => {
-                dispatch({ type: DELETE_FRIEND, index })
-            }, 500)
-        }
+    function onDeleteFriend(item, index) {
+        dispatch({ type: DELETE_FRIEND, item, index })
     }
 
-    function onFavoriteFriend(index) {
-        const listEl = document.querySelectorAll('.item.show')
-        dispatch({ type: FAVORITE_FRIEND, index })
+    function onFavoriteFriend(item, index) {
+        dispatch({ type: FAVORITE_FRIEND, item, index })
     }
 
     function onSearchFriend(query) {
+        setQuery(query)
         dispatch({ type: SEARCH_FRIEND, query })
     }
 
@@ -42,25 +41,23 @@ function Friends() {
     }
 
     return (
-        <div>
+        <>
             <Header onChange={onSearchFriend} />
-            <div className="search-bar">
-                <AddFriend
-                    placeholder="Enter your Friend's Name"
-                    onSubmit={onAddFriend}
-                />
-            </div>
+            <AddFriend
+                placeholder="Enter your Friend's Name"
+                onSubmit={onAddFriend}
+            />
             <ListView
-                data={state.data.slice(state.page.offset, state.page.limit)}
+                data={items.slice(state.page.offset, state.page.limit)}
                 onDelete={onDeleteFriend}
                 onFavorite={onFavoriteFriend}
             />
             <Footer
-                page={state.page}
+                page={{ ...state.page, total: items.length }}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
             />
-        </div>
+        </>
     )
 }
 
