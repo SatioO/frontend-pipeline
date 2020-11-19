@@ -40,28 +40,9 @@ export const INITIAL_STATE = {
 export function reducer(state, action) {
     switch (action.type) {
         case ADD_FRIEND: {
-            const data = [{ title: action.value, active: false }, ...state.data].sort((a, b) => b.active - a.active)
-            
             return {
                 ...state,
-                page: {
-                    ...state.page,
-                    total: state.page.total + 1
-                },
-                data,
-            }
-        }
-
-        case DELETE_FRIEND: {
-            return {
-                ...state,
-                page: {
-                    ...state.page,
-                    offset: state.page.total - 1 === step ? 0 : state.page.offset,
-                    limit: state.page.total - 1 === step ? step : state.page.limit,
-                    total: state.page.total - 1
-                },
-                data: state.data.filter(item => action.item.title !== item.title),
+                data: [{ title: action.value, active: false }, ...state.data].sort((a, b) => b.active - a.active),
             }
         }
 
@@ -76,25 +57,27 @@ export function reducer(state, action) {
             }
         }
 
+        case DELETE_FRIEND: {
+            const data = state.data.filter(item => action.item.title !== item.title)
+            return {
+                ...state,
+                page: {
+                    ...state.page,
+                    offset: data.length - 1 === step ? 0 : state.page.offset,
+                    limit: data.length - 1 === step ? step : state.page.limit
+                },
+                data,
+            }
+        }
+
         case SEARCH_FRIEND:
             return {
                 ...state,
                 page: {
                     ...state.page,
                     offset: 0,
-                    limit: step,
-                    total: data.length
+                    limit: step
                 },
-            }
-
-        case PREVIOUS_PAGE:
-            return {
-                ...state,
-                page: {
-                    ...state.page,
-                    offset: state.page.offset - step,
-                    limit: state.page.limit - step
-                }
             }
 
         case NEXT_PAGE:
@@ -104,6 +87,16 @@ export function reducer(state, action) {
                     ...state.page,
                     offset: state.page.offset + step,
                     limit: state.page.limit + step
+                }
+            }
+
+        case PREVIOUS_PAGE:
+            return {
+                ...state,
+                page: {
+                    ...state.page,
+                    offset: state.page.offset - step,
+                    limit: state.page.limit - step
                 }
             }
 
