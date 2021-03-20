@@ -23,4 +23,4 @@ function AddFriend(props) {
     )
 }
 
-export default AddFriend
+export default React.memo(AddFriend)
